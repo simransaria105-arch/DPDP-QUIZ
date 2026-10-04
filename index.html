@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17152d">
+<meta name="description" content="A 10-question DPDP Business Readiness Check by CA Simran Saria Bansal.">
+<title>DPDP Business Readiness Check | CA Simran Saria Bansal</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#f4f5f9;--ink:#171b2d;--muted:#697086;--card:#fff;--line:#e5e7ef;--accent:#5b4bdb;--accent2:#7566ec}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button{font:inherit;-webkit-tap-highlight-color:transparent}
+.app{width:100%;max-width:760px;margin:0 auto;padding:16px 14px 32px}
+.hero{background:linear-gradient(145deg,#151329,#352b70);color:#fff;border-radius:24px;padding:27px 22px 24px;box-shadow:0 12px 35px rgba(30,25,70,.16)}
+.brand{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;opacity:.86}
+h1{font-size:clamp(30px,8vw,46px);line-height:1.02;letter-spacing:-.035em;margin:14px 0 11px}
+.hero p{margin:0;color:#dfdcf2;line-height:1.55;font-size:15px}
+.progress-area{padding:16px 2px 9px;position:sticky;top:0;background:rgba(244,245,249,.96);backdrop-filter:blur(9px);z-index:5}
+.progress-row{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;font-weight:750;margin-bottom:8px}
+.track{height:7px;background:#e1e3eb;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .25s ease}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 18px;margin-top:10px;box-shadow:0 5px 20px rgba(16,24,40,.04)}
+.qtag{font-size:11px;color:var(--accent);font-weight:850;text-transform:uppercase;letter-spacing:.09em}
+.question{font-size:22px;line-height:1.3;font-weight:800;letter-spacing:-.015em;margin:9px 0 9px}
+.hint{font-size:14px;line-height:1.5;color:var(--muted);margin:0 0 18px}
+.answers{display:grid;gap:10px}
+.answer{width:100%;text-align:left;background:#fff;border:1.5px solid #dfe2eb;border-radius:14px;padding:15px 14px;cursor:pointer;color:var(--ink);font-weight:700;line-height:1.35;min-height:54px;transition:.12s}
+.answer:active{transform:scale(.99)}
+.answer.selected{border-color:var(--accent);background:#f5f3ff;box-shadow:0 0 0 2px rgba(91,75,219,.08)}
+.nav{display:flex;gap:10px;margin-top:16px}
+.nav button{flex:1;border:0;border-radius:13px;padding:14px 12px;font-weight:800;min-height:50px;cursor:pointer}
+.back{background:#e9ebf2;color:var(--ink)}
+.next{background:var(--accent);color:#fff}
+.next:disabled{opacity:.45;cursor:not-allowed}
+.result{display:none;text-align:center;padding:25px 18px}
+.result.show{display:block}
+.score{width:154px;height:154px;border-radius:50%;margin:4px auto 18px;display:grid;place-items:center;background:conic-gradient(var(--accent) 0deg,#e5e6ed 0deg)}
+.score-inner{width:120px;height:120px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.score-number{font-size:36px;font-weight:900;line-height:1}
+.score-label{font-size:10px;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-top:5px}
+.result h2{font-size:25px;margin:0 0 8px}
+.result p{color:var(--muted);line-height:1.55;font-size:15px;margin:0}
+.tease{margin:21px 0 0;padding:18px 14px;background:#f7f5ff;border:1px solid #e5e0ff;border-radius:15px}
+.tease strong{display:block;font-size:18px;margin-bottom:7px}
+.cta{margin-top:17px;background:var(--ink);color:#fff;border-radius:15px;padding:17px 14px;font-weight:800;line-height:1.4}
+.restart{margin-top:14px;border:0;background:#eceef5;color:var(--ink);border-radius:12px;padding:12px 18px;font-weight:800}
+.footer{text-align:center;color:#8990a1;font-size:11px;line-height:1.5;margin:22px 4px 0}
+.hidden{display:none!important}
+@media(min-width:600px){.app{padding-top:28px}.card{padding:27px}.answer:hover{border-color:#aaa1f2;background:#faf9ff}.nav button{max-width:240px}}
+</style>
+</head>
+<body>
+<main class="app">
+<section class="hero">
+<div class="brand">TiE × DPDP Awareness</div>
+<h1>How DPDP-ready is your business?</h1>
+<p>A 10-question business reality check. No legal jargon. No data is collected. Just answer what happens in your organisation.</p>
+</section>
+
+<section class="progress-area" id="progressArea">
+<div class="progress-row"><span id="counter">Question 1 of 10</span><span id="pct">10%</span></div>
+<div class="track"><div class="fill" id="fill"></div></div>
+</section>
+
+<section class="card" id="quizCard"></section>
+
+<section class="card result" id="result">
+<div class="score" id="scoreRing"><div class="score-inner"><div><div class="score-number" id="score">0%</div><div class="score-label">READINESS</div></div></div></div>
+<h2 id="resultTitle">Interesting.</h2>
+<p>You just answered 10 questions about situations that happen in ordinary businesses every day.</p>
+<div class="tease">
+<strong>But here's the interesting part…</strong>
+<span>How many of your answers are actually correct?</span>
+</div>
+<div class="cta">Let's find out at the TiE DPDP session.</div>
+<button class="restart" id="restart">Take the check again</button>
+</section>
+
+<div class="footer">
+© 2026 CA Simran Saria Bansal. All rights reserved.<br>
+DPDP Business Readiness Check • Awareness tool only • Not a legal opinion or compliance certification.
+</div>
+</main>
+
+<script>
+const qs=[
+{q:"Your Tally/ERP contains customer PAN, mobile number, email and address. Do you know which of this information is personal data under DPDP and what your business is permitted to do with it?",h:"Almost every business holds personal data somewhere — accounting software, CRM, email, spreadsheets or WhatsApp.",a:["Yes","Partly","Not sure"],p:[3,1,0]},
+{q:"Your office laptop containing customer or employee data is stolen. Is this a DPDP personal data breach even if you do not know whether anyone actually opened the files?",h:"A very ordinary business incident can raise a very important privacy question.",a:["Yes","No","Not sure"],p:[3,0,1]},
+{q:"You give employee PAN and other required details to your CA/payroll agency for PF, ESI, TDS and other statutory compliance. Do you need fresh consent from every employee before sharing the data for this purpose?",h:"Think about processing required for employment and compliance with legal obligations.",a:["Yes","No","Not sure"],p:[0,3,1]},
+{q:"A customer gives you their mobile number to generate an invoice. Can you later use the same number to send promotional WhatsApp messages?",h:"The same piece of data can be used for different purposes — but does the legal basis remain the same?",a:["Yes","No","Not sure"],p:[0,3,1]},
+{q:"Your company website has an “Accept All Cookies” button. Do you know what those cookies and trackers collect, where the information goes and whether visitors can refuse the non-essential ones?",h:"Think beyond the Privacy Policy: analytics, advertising, preferences and third-party trackers.",a:["Yes","No","Not sure"],p:[3,0,1]},
+{q:"Your CRM, cloud provider or AI tool processes some customer data outside India. Do you know whether your business is permitted to transfer or make that personal data available outside India?",h:"Your business may be Indian even when the technology stack is global.",a:["Yes","No","Not sure"],p:[3,0,1]},
+{q:"An employee uploads a customer database into an AI tool to analyse purchasing patterns. Does your organisation have a clear answer to whether this is permitted?",h:"AI has made it incredibly easy for employees to move business data into third-party tools.",a:["Yes","No","Not sure"],p:[3,0,1]},
+{q:"A developer discovers that changing a number in your website/API URL lets a customer see someone else’s account. Would you recognise this as a potential personal data breach?",h:"You do not need a sophisticated hacker for a serious privacy incident to occur.",a:["Yes","No","Not sure"],p:[3,0,1]},
+{q:"Your customer emails: “Tell me what personal data your company holds about me.” Do you have a process to identify the data and respond to that request?",h:"A privacy framework gives individuals rights — but businesses need a way to actually respond.",a:["Yes","No","Not sure"],p:[3,0,1]},
+{q:"Your business has customer data, employee data, vendor data, website data and data sitting with multiple SaaS/cloud providers. Who inside your organisation is responsible for ensuring that all of this is handled appropriately under DPDP?",h:"The bigger the data ecosystem, the harder it becomes to say “someone else handles it.”",a:["We have someone clearly responsible","Multiple people handle it","Nobody specifically / Not sure"],p:[3,1,0]}
+];
+
+let i=0, answers=Array(qs.length).fill(null);
+const card=document.getElementById("quizCard"), result=document.getElementById("result");
+
+function render(){
+ const x=qs[i];
+ document.getElementById("counter").textContent=`Question ${i+1} of ${qs.length}`;
+ document.getElementById("pct").textContent=`${Math.round((i+1)/qs.length*100)}%`;
+ document.getElementById("fill").style.width=((i+1)/qs.length*100)+"%";
+ card.innerHTML=`
+   <div class="qtag">Business reality check</div>
+   <div class="question">${x.q}</div>
+   <p class="hint">${x.h}</p>
+   <div class="answers">
+     ${x.a.map((a,j)=>`<button class="answer ${answers[i]===j?'selected':''}" data-j="${j}">${a}</button>`).join("")}
+   </div>
+   <div class="nav">
+     <button class="back" id="back" ${i===0?"disabled":""}>Back</button>
+     <button class="next" id="next" ${answers[i]===null?"disabled":""}>${i===qs.length-1?"Reveal my score":"Next"}</button>
+   </div>`;
+ document.querySelectorAll(".answer").forEach(b=>b.onclick=()=>{
+   answers[i]=Number(b.dataset.j);
+   document.querySelectorAll(".answer").forEach(z=>z.classList.remove("selected"));
+   b.classList.add("selected");
+   document.getElementById("next").disabled=false;
+ });
+ document.getElementById("back").onclick=()=>{if(i>0){i--;render();window.scrollTo({top:0,behavior:"smooth"})}};
+ document.getElementById("next").onclick=()=>{
+   if(answers[i]===null)return;
+   if(i<qs.length-1){i++;render();window.scrollTo({top:0,behavior:"smooth"})}
+   else showResult();
+ };
+}
+function showResult(){
+ let total=0;
+ qs.forEach((x,k)=>total+=x.p[answers[k]]);
+ const pct=Math.round(total/(qs.length*3)*100);
+ document.getElementById("score").textContent=pct+"%";
+ const deg=pct*3.6;
+ document.getElementById("scoreRing").style.background=`conic-gradient(var(--accent) ${deg}deg,#e5e6ed ${deg}deg)`;
+ document.getElementById("resultTitle").textContent=pct>=80?"You may be more ready than you think.":pct>=55?"You have some homework to uncover.":"This score may be telling you something.";
+ card.classList.add("hidden");
+ document.getElementById("progressArea").classList.add("hidden");
+ result.classList.add("show");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.getElementById("restart").onclick=()=>{
+ i=0;answers=Array(qs.length).fill(null);
+ result.classList.remove("show");card.classList.remove("hidden");document.getElementById("progressArea").classList.remove("hidden");
+ render();window.scrollTo({top:0,behavior:"smooth"});
+};
+render();
+</script>
+</body>
+</html>
